@@ -30,6 +30,15 @@ export const useEditorStore = defineStore('editor', {
       this.selectedNodeId = id
     },
 
+    addChildNode(parentId: string, node: EditorNode) {
+      const parent = findNode(this.document, parentId)
+      if (!parent) return
+      if (!parent.children) {
+        parent.children = []
+      }
+      parent.children.push(node)
+    },
+
     addRootNode(node: EditorNode) {
       this.document.push(node)
     },

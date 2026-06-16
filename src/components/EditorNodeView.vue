@@ -51,11 +51,7 @@ function onDropChild(event: DragEvent) {
   if (!type) return
   const childTypeDef = getType(type)
   if (!childTypeDef) return
-  const newNode = childTypeDef.createDefault()
-  if (!props.node.children) {
-    props.node.children = []
-  }
-  props.node.children.push(newNode)
+  store.addChildNode(props.node.id, childTypeDef.createDefault())
 }
 </script>
 
