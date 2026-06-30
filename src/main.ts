@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import './style.css'
 import { useEditorRegistry } from './composables/useEditorRegistry'
-import { textPlugin, imagePlugin, containerPlugin } from './plugins'
+import { textPlugin, imagePlugin, containerPlugin, richTextPlugin } from './plugins'
 
 const app = createApp(App)
 app.use(createPinia())
@@ -13,5 +13,6 @@ const { registerPlugin } = useEditorRegistry()
 registerPlugin(textPlugin)
 registerPlugin(imagePlugin)
 registerPlugin(containerPlugin)
+registerPlugin(richTextPlugin)
 
 app.mount('#app')

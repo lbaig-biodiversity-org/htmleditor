@@ -6,6 +6,8 @@ import ImageRenderer from './ImageRenderer.vue'
 import ImageInspector from './ImageInspector.vue'
 import ContainerRenderer from './ContainerRenderer.vue'
 import ContainerInspector from './ContainerInspector.vue'
+import RichTextRenderer from './RichTextRenderer.vue'
+import RichTextInspector from './RichTextInspector.vue'
 
 export const textPlugin: EditorPlugin = {
   id: 'core-text',
@@ -70,6 +72,26 @@ export const containerPlugin: EditorPlugin = {
       }),
       renderComponent: ContainerRenderer,
       inspectorComponent: ContainerInspector,
+    },
+  ],
+}
+
+export const richTextPlugin: EditorPlugin = {
+  id: 'core-rich-text',
+  contentTypes: [
+    {
+      type: 'richText',
+      label: 'Rich text',
+      icon: '✍️',
+      createDefault: () => ({
+        id: createId(),
+        type: 'richText',
+        props: {
+          html: '<p>Start writing rich text...</p>',
+        },
+      }),
+      renderComponent: RichTextRenderer,
+      inspectorComponent: RichTextInspector,
     },
   ],
 }
