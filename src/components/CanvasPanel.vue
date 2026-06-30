@@ -9,13 +9,15 @@
   >
     <div v-if="store.document.length === 0" class="empty-state">
       <div class="empty-icon">⬇️</div>
-      <div class="empty-text">Drag components here to get started</div>
+      <div class="empty-text">Click or drag components from the left panel to get started</div>
     </div>
 
     <EditorNodeView
-      v-for="node in store.document"
+      v-for="(node, i) in store.document"
       :key="node.id"
       :node="node"
+      :isFirst="i === 0"
+      :isLast="i === store.document.length - 1"
     />
   </main>
 </template>

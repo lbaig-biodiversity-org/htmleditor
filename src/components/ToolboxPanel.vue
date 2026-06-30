@@ -6,7 +6,9 @@
       :key="typeDef.type"
       class="toolbox-item"
       draggable="true"
+      :title="`Click or drag to add ${typeDef.label}`"
       @dragstart="onDragStart($event, typeDef.type)"
+      @click="onAdd(typeDef.type)"
     >
       <span v-if="typeDef.icon" class="toolbox-item-icon">{{ typeDef.icon }}</span>
       {{ typeDef.label }}
@@ -17,12 +19,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useEditorRegistry } from '../composables/useEditorRegistry'
+import { useEditorStore } from '../store/editor'
 
-const { getAllTypes } = useEditorRegistry()
+const { getAllTypes, getType } = useEditorRegistry()
+const store = useEditorStore()
 const types = computed(() => getAllTypes())
 
 function onDragStart(event: DragEvent, type: string) {
   event.dataTransfer?.setData('application/editor-type', type)
+}
+
+function onAdd(type: string) {
+  const typeDef = getType(type)
+  if (!typeDef) return
+  const node = typeDef.createDefault()
+  store.addRootNode(node)
+  store.selectNode(node.id)
 }
 </script>
 
@@ -54,7 +66,7 @@ function onDragStart(event: DragEvent, type: string) {
   background: #fff;
   border: 1px solid #e2e6ef;
   border-radius: 8px;
-  cursor: grab;
+  cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
   color: #1e2a3a;

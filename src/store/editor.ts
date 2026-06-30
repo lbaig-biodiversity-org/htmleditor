@@ -12,6 +12,18 @@ function findNode(nodes: EditorNode[], id: string): EditorNode | null {
   return null
 }
 
+// Returns the array that directly contains the node with the given id
+function findContainingArray(nodes: EditorNode[], id: string): EditorNode[] | null {
+  for (const node of nodes) {
+    if (node.id === id) return nodes
+    if (node.children?.length) {
+      const found = findContainingArray(node.children, id)
+      if (found) return found
+    }
+  }
+  return null
+}
+
 export const useEditorStore = defineStore('editor', {
   state: () => ({
     document: [] as EditorNode[],
@@ -47,6 +59,26 @@ export const useEditorStore = defineStore('editor', {
       const node = findNode(this.document, id)
       if (!node) return
       node.props = { ...node.props, ...patch }
+    },
+
+    moveNodeUp(id: string) {
+      const arr = findContainingArray(this.document, id)
+      if (!arr) return
+      const idx = arr.findIndex((n) => n.id === id)
+      if (idx <= 0) return
+      const tmp = arr[idx - 1]
+      arr[idx - 1] = arr[idx]
+      arr[idx] = tmp
+    },
+
+    moveNodeDown(id: string) {
+      const arr = findContainingArray(this.document, id)
+      if (!arr) return
+      const idx = arr.findIndex((n) => n.id === id)
+      if (idx < 0 || idx >= arr.length - 1) return
+      const tmp = arr[idx + 1]
+      arr[idx + 1] = arr[idx]
+      arr[idx] = tmp
     },
   },
 })
