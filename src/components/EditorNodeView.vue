@@ -33,6 +33,7 @@
     <div
       v-if="typeDef?.canHaveChildren"
       class="children-drop-zone"
+      :style="childrenZoneStyle"
       @dragover.prevent
       @drop.stop="onDropChild"
     >
@@ -67,6 +68,18 @@ const { getType } = useEditorRegistry()
 
 const typeDef = computed(() => getType(props.node.type))
 const isSelected = computed(() => store.selectedNodeId === props.node.id)
+
+const childrenZoneStyle = computed(() => {
+  if (!typeDef.value?.canHaveChildren) return {}
+  const p = props.node.props
+  return {
+    display: 'flex',
+    flexDirection: ((p.direction as string) || 'column') as 'row' | 'column',
+    gap: `${(p.gap as number) ?? 8}px`,
+    padding: `${(p.padding as number) ?? 8}px`,
+    background: (p.background as string) || undefined,
+  }
+})
 
 function onDropChild(event: DragEvent) {
   const type = event.dataTransfer?.getData('application/editor-type')

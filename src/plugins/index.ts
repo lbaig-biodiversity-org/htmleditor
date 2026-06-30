@@ -4,6 +4,8 @@ import TextRenderer from './TextRenderer.vue'
 import TextInspector from './TextInspector.vue'
 import ImageRenderer from './ImageRenderer.vue'
 import ImageInspector from './ImageInspector.vue'
+import ContainerRenderer from './ContainerRenderer.vue'
+import ContainerInspector from './ContainerInspector.vue'
 
 export const textPlugin: EditorPlugin = {
   id: 'core-text',
@@ -42,6 +44,32 @@ export const imagePlugin: EditorPlugin = {
       }),
       renderComponent: ImageRenderer,
       inspectorComponent: ImageInspector,
+    },
+  ],
+}
+
+export const containerPlugin: EditorPlugin = {
+  id: 'core-container',
+  contentTypes: [
+    {
+      type: 'container',
+      label: 'Container',
+      icon: '📦',
+      canHaveChildren: true,
+      createDefault: () => ({
+        id: createId(),
+        type: 'container',
+        props: {
+          label: 'Container',
+          direction: 'column',
+          gap: 8,
+          padding: 8,
+          background: '#ffffff',
+        },
+        children: [],
+      }),
+      renderComponent: ContainerRenderer,
+      inspectorComponent: ContainerInspector,
     },
   ],
 }
