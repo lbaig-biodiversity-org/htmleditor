@@ -18,6 +18,11 @@
         title="Move down"
         @click="store.moveNodeDown(node.id)"
       >↓</button>
+      <button
+        class="ctrl-btn ctrl-btn-danger"
+        title="Delete"
+        @click="store.deleteNode(node.id)"
+      >✕</button>
     </div>
 
     <component
@@ -145,6 +150,12 @@ function onDropChild(event: DragEvent) {
 .ctrl-btn:disabled {
   opacity: 0.3;
   cursor: default;
+}
+
+.ctrl-btn-danger:hover:not(:disabled) {
+  background: #dc2626;
+  border-color: #dc2626;
+  color: #fff;
 }
 
 .unknown-node {

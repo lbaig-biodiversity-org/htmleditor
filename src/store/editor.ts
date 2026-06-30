@@ -80,5 +80,22 @@ export const useEditorStore = defineStore('editor', {
       arr[idx + 1] = arr[idx]
       arr[idx] = tmp
     },
+
+    deleteNode(id: string) {
+      const arr = findContainingArray(this.document, id)
+      if (!arr) return
+      const idx = arr.findIndex((n) => n.id === id)
+      if (idx < 0) return
+
+      const removedNode = arr[idx]
+      if (
+        this.selectedNodeId &&
+        (this.selectedNodeId === id || findNode([removedNode], this.selectedNodeId))
+      ) {
+        this.selectedNodeId = null
+      }
+
+      arr.splice(idx, 1)
+    },
   },
 })
