@@ -1,0 +1,21 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Inter, 'Segoe UI', system-ui, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1e2a3a;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
